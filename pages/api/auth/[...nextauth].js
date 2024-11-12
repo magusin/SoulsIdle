@@ -17,7 +17,7 @@ export default NextAuth({
         const { username, password } = credentials;
 
         // Recherchez l'utilisateur par nom d'utilisateur dans la base de données
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: { username },
         });
 

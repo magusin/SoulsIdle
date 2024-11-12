@@ -21,4 +21,6 @@ model User {
   createdAt DateTime @default(now())
   confirmed         Boolean  @default(false)
   confirmationToken String?
+  resetToken        String?
+  resetTokenExpiry  DateTime?
 } 

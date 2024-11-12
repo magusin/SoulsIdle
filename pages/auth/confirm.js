@@ -22,8 +22,8 @@ const Confirm = () => {
   }, [token]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-3xl font-bold mb-6">Confirmation de l'inscription</h1>
+    <div className="flex flex-col items-center justify-center flex-grow py-10 px-6">
+    <h1 className="text-3xl font-bold mb-6">Confirmation de l'inscription</h1>
       <p className="text-lg">{message}</p>
     </div>
   );
