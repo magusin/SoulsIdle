@@ -41,4 +41,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 
 ## ORM PRISMA
 
-
+npx prisma migrate dev --name name-here
+npx prisma generate
+npx prisma studio
