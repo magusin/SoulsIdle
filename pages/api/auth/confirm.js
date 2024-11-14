@@ -12,15 +12,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Aucun token de confirmation n'a été fourni." });
     }
 
-    console.log('Token reçu pour confirmation:', token);
-
     try {
       // Vérifier si un utilisateur avec ce token existe
       const user = await prisma.user.findFirst({
         where: { confirmationToken: trimmedToken },
       });
-
-      console.log('user', user);
 
       if (!user) {
         console.error('Aucun utilisateur trouvé pour ce token.');
@@ -47,7 +43,22 @@ export default async function handler(req, res) {
         throw new Error('Impossible de mettre à jour l\'utilisateur pour confirmer le compte.');
       }
 
-      console.log('Utilisateur confirmé avec succès:', updatedUser);
+      // Créer des entrées par défaut dans user_stats et user_resources pour le nouvel utilisateur
+      await prisma.userStat.create({
+        data: {
+          userId: user.id,
+          gainPerClick: 1, // Valeur par défaut pour le gain par clic
+          gainPerSecond: 0, // Valeur par défaut pour le gain continu
+          clicks: 0,
+        },
+      })
+
+      await prisma.userResource.create({
+        data: {
+          userId: user.id,
+          souls: 0, // Valeur par défaut pour les âmes
+        },
+      })
 
       res.status(200).json({ message: 'Votre compte a été confirmé avec succès. Vous pouvez maintenant vous connecter.' });
     } catch (error) {

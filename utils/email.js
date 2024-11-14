@@ -9,7 +9,7 @@ export const sendConfirmationEmail = async (email, confirmationToken) => {
     },
   });
 
-  const confirmationUrl = `${process.env.NEXTAUTH_URL}/api/auth/confirm?token=${confirmationToken}`;
+  const confirmationUrl = `${process.env.NEXTAUTH_URL}/auth/confirm?token=${confirmationToken}`;
 
   await transporter.sendMail({
     from: `"SoulsIdle" <${process.env.EMAIL_USER}>`,

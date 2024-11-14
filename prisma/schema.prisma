@@ -23,4 +23,26 @@ model User {
   confirmationToken String?
   resetToken        String?
   resetTokenExpiry  DateTime?
+  resources           UserResource?
+  stats               UserStat?
 } 
+
+model UserResource {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  souls     Int      @default(0) // Âmes accumulées par l'utilisateur
+  createdAt DateTime @default(now())
+}
+
+model UserStat {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  user          User     @relation(fields: [userId], references: [id])
+  gainPerClick  Int      @default(1) // Gain par clic, par défaut à 1
+  gainPerSecond Int      @default(0) // Gain continu, par défaut à 0
+  clicks        Int      @default(0) // Nombre total de clics
+  createdAt     DateTime @default(now())
+}
+
+

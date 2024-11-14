@@ -13,6 +13,11 @@ const Confirm = () => {
         try {
           const response = await axios.get(`/api/auth/confirm?token=${token}`);
           setMessage(response.data.message);
+          if (response.status === 200) {
+            setTimeout(() => {
+              router.push('/auth/signin');
+            }, 2000);
+          }
         } catch (error) {
           setMessage(error.response.data.error);
         }

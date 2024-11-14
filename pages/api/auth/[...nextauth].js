@@ -21,6 +21,10 @@ export default NextAuth({
           where: { username },
         });
 
+        if (!user) {
+          throw new Error('Nom d\'utilisateur ou mot de passe incorrect.');
+        }
+
         if (!user.confirmed) {
             throw new Error('Votre compte n\'a pas été confirmé. Veuillez vérifier votre email.');
         }
