@@ -9,7 +9,10 @@ const Home = () => {
     <div className="flex flex-col items-center justify-center flex-grow py-10 px-6">
       <div className="mb-10 text-center">
         {session ? (
+          <>
           <h1 className="text-3xl font-bold mb-6">Bienvenue, {session.user.name} !</h1>
+          <IdleGame />
+          </>
         ) : (
           <>
             <h1 className="text-3xl font-bold mb-6">Bienvenue sur FromSoftware Idle Game</h1>
@@ -27,7 +30,6 @@ const Home = () => {
           </>
         )}
       </div>
-      <IdleGame />
     </div>
   )
 }
