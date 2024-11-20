@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid'
 
 const prisma = new PrismaClient();
 
@@ -55,12 +56,31 @@ export default NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
+        const sessionId = uuidv4();
+
+        // Mettez à jour le sessionId dans la base de données
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { sessionId },
+        });
+
         token.id = user.id;
+        token.sessionId = sessionId; // Ajoutez le sessionId au JWT
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id;
+      session.user.sessionId = token.sessionId;
+      const stats = await prisma.userStat.findUnique({
+        where: { userId: token.id },
+      })
+      if (stats) {
+        session.user.stats = {
+          dmgPerClick: stats.dmgPerClick,
+          soulsPer10Second: stats.soulsPer10Second,
+          currentMonsterLevel: stats.currentMonsterLevel,
+        }
+      }
       return session;
     },
   },

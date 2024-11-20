@@ -1,26 +1,31 @@
 import React from 'react'
 import IdleGame from 'C/idleGame'
 import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
+import Image from 'next/image'
 
 const Home = () => {
   const { data: session } = useSession()
 
   return (
-    <div className="flex flex-col items-center justify-center flex-grow py-10 px-6">
+    <div className="min-h-screen overflow-y-hidden">
       <div className="mb-10 text-center">
         {session ? (
           <>
-          <h1 className="text-3xl font-bold mb-6">Bienvenue, {session.user.name} !</h1>
           <IdleGame />
           </>
         ) : (
           <>
-            <h1 className="text-3xl font-bold mb-6">Bienvenue sur FromSoftware Idle Game</h1>
-            <img
-              src="/path/to/your/hero-image.jpg"
-              alt="Illustration de FromSoftware Idle Game"
-              className="w-full max-w-md mb-6 rounded-lg shadow-lg"
+          <div className="relative md:h-[300px] h-[200px] lg:h-[350px] xl:h-[380px] 2xl:h-[420px] w-full">
+            <Image
+              src="/images/ethereal-souls.webp"
+              alt="Illustration de Ethereal Souls Idle Game"
+              layout="fill"
+          objectFit="cover"
+          
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
+          </div>
             <h2 className="text-2xl font-semibold mb-4">
               Collectez des âmes, améliorez vos armes, et devenez une légende !
             </h2>
@@ -35,3 +40,4 @@ const Home = () => {
 }
 
 export default Home
+

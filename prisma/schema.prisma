@@ -23,6 +23,7 @@ model User {
   confirmationToken String?
   resetToken        String?
   resetTokenExpiry  DateTime?
+  sessionId        String?
   resources           UserResource?
   stats               UserStat?
 } 
@@ -32,6 +33,7 @@ model UserResource {
   userId    Int      @unique
   user      User     @relation(fields: [userId], references: [id])
   souls     Int      @default(0) // Âmes accumulées par l'utilisateur
+  runes     Int      @default(0) // Runes accumulées par l'utilisateur
   createdAt DateTime @default(now())
 }
 
@@ -39,10 +41,21 @@ model UserStat {
   id            Int      @id @default(autoincrement())
   userId        Int      @unique
   user          User     @relation(fields: [userId], references: [id])
-  gainPerClick  Int      @default(1) // Gain par clic, par défaut à 1
-  gainPerSecond Int      @default(0) // Gain continu, par défaut à 0
+  dmgPerClick  Int      @default(1) // Gain par clic, par défaut à 1
+  soulsPer10Second Int      @default(0) // Gain continu, par défaut à 0
   clicks        Int      @default(0) // Nombre total de clics
+  currentMonsterLevel Int @default(1) // Niveau actuel du monstre
   createdAt     DateTime @default(now())
+}
+
+model Monster {
+  id        Int      @id @default(autoincrement())
+  level     Int      // Niveau du monstre
+  name      String   // Nom du monstre
+  maxHp     Int      // Points de vie maximum
+  reward    Int      // Âmes gagnées lorsque le monstre est vaincu
+  imageUrl  String   // URL de l'image du monstre
+  createdAt DateTime @default(now())
 }
 
 
