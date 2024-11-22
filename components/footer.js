@@ -2,7 +2,7 @@
 
 const Footer = () => (
     <footer className="bg-gray-800 text-white py-4 text-center w-full mt-auto">
-      <p>&copy; 2024 FromSoft Idle Game. Tous droits réservés.</p>
+      <p>&copy; 2024 Ethereal Souls. Tous droits réservés.</p>
     </footer>
   );
 

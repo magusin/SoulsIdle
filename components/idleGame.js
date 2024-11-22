@@ -15,8 +15,10 @@ export default function IdleGame() {
   useEffect(() => {
     if (!socket) {
       // socket = io('http://localhost:3001')
-      socket = io ('https://soulsidle-websocket.onrender.com/')
-
+      // socket = io ('https://soulsidle-websocket.onrender.com/')
+      socket = io("https://souls-idle-websocket-i72ve53id-my-team-f29c9693.vercel.app", {
+  transports: ["websocket", "polling"], // Use appropriate transport methods
+});
       if (session && session.user) {
         socket.emit('join', { sessionId: session.user.sessionId })
 
